@@ -13,21 +13,25 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.Collection;
 
-public class SetOpponentCommand {
-    public SetOpponentCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("opponent").then(Commands.literal("set").then(Commands.argument("target", EntityArgument.entities()).executes(
-                command -> setOpponent(command, EntityArgument.getEntities(command, "target"))
-        ))));
+public class AcceptCommand {
+    public AcceptCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("accept").then(Commands.argument("target", EntityArgument.entities()).executes(
+                command -> Accept(command, EntityArgument.getEntities(command, "target"))
+        )));
     }
 
-    private int setOpponent(CommandContext<CommandSourceStack> command, Collection<? extends Entity> pTargets) {
+    private int Accept(CommandContext<CommandSourceStack> command, Collection<? extends Entity> pTargets) {
         if (command.getSource().getEntity() instanceof Player player) {
             if (pTargets.size() != 1) {
                 player.sendSystemMessage(Component.literal("select one opponent"));
             }
             if (pTargets.toArray()[0] instanceof Player target) {
-                player.getPersistentData().putString(Main.MOD_ID + "_opponent", target.getName().getString());
-                player.sendSystemMessage(Component.literal("opponent: " + target.getName().getString()));
+                if (target.getPersistentData().getString(Main.MOD_ID + "_opponent").equals(player.getName().getString())) {
+                    target.getPersistentData().putString(Main.MOD_ID + "_opponent", "");
+                    player.sendSystemMessage(Component.literal("accept!"));
+                } else {
+                    player.sendSystemMessage(Component.literal("no match!"));
+                }
             } else {
                 player.sendSystemMessage(Component.literal("select player"));
             }

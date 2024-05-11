@@ -6,30 +6,23 @@ import com.mojang.brigadier.context.CommandContext;
 import net.jwn.mod.Main;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.Collection;
-
-public class SetOpponentCommand {
-    public SetOpponentCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("opponent").then(Commands.literal("set").then(Commands.argument("target", EntityArgument.entities()).executes(
-                command -> setOpponent(command, EntityArgument.getEntities(command, "target"))
-        ))));
+public class GetOpponentCommand {
+    public GetOpponentCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("opponent").then(Commands.literal("get").executes(this::getOpponent)));
     }
 
-    private int setOpponent(CommandContext<CommandSourceStack> command, Collection<? extends Entity> pTargets) {
+    private int getOpponent(CommandContext<CommandSourceStack> command) {
         if (command.getSource().getEntity() instanceof Player player) {
-            if (pTargets.size() != 1) {
-                player.sendSystemMessage(Component.literal("select one target"));
-            }
-            if (pTargets.toArray()[0] instanceof Player target) {
-                player.getPersistentData().putString(Main.MOD_ID + "_target", target.getName().getString());
-                player.sendSystemMessage(Component.literal("target: " + target.getName().getString()));
+            String targetName = player.getPersistentData().getString(Main.MOD_ID + "_opponent");
+            boolean hasTarget = !targetName.isEmpty();
+
+            if (hasTarget) {
+                player.sendSystemMessage(Component.literal("opponent: " + targetName));
             } else {
-                player.sendSystemMessage(Component.literal("select player"));
+                player.sendSystemMessage(Component.literal("no opponent"));
             }
         }
         return Command.SINGLE_SUCCESS;
