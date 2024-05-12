@@ -24,7 +24,7 @@ public class ResetOpponentC2SPacket {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
 
-            player.getPersistentData().putString(Main.MOD_ID + "_opponent", "");
+            player.getPersistentData().remove(Main.MOD_ID + "_opponent");
         });
         return true;
     }

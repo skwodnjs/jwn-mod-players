@@ -16,24 +16,30 @@ import java.util.Collection;
 public class AcceptCommand {
     public AcceptCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("accept").then(Commands.argument("target", EntityArgument.entities()).executes(
-                command -> Accept(command, EntityArgument.getEntities(command, "target"))
+                command -> accept(command, EntityArgument.getEntities(command, "target"))
         )));
     }
 
-    private int Accept(CommandContext<CommandSourceStack> command, Collection<? extends Entity> pTargets) {
+    private int accept(CommandContext<CommandSourceStack> command, Collection<? extends Entity> pTargets) {
         if (command.getSource().getEntity() instanceof Player player) {
             if (pTargets.size() != 1) {
-                player.sendSystemMessage(Component.literal("select one opponent"));
+                player.sendSystemMessage(Component.translatable("error.mod_players.one_opponent"));
             }
             if (pTargets.toArray()[0] instanceof Player target) {
-                if (target.getPersistentData().getString(Main.MOD_ID + "_opponent").equals(player.getName().getString())) {
-                    target.getPersistentData().putString(Main.MOD_ID + "_opponent", "");
-                    player.sendSystemMessage(Component.literal("accept!"));
+                if (target.getPersistentData().getUUID(Main.MOD_ID + "_opponent").equals(player.getUUID())) {
+//                    target.getPersistentData().remove(Main.MOD_ID + "_opponent");
+//                    player.getPersistentData().remove(Main.MOD_ID + "_opponent");
+
+                    target.getPersistentData().putBoolean(Main.MOD_ID + "_battle", true);
+                    player.getPersistentData().putBoolean(Main.MOD_ID + "_battle", true);
+
+                    target.sendSystemMessage(Component.translatable("message.mod_players.accept_target", player.getName().getString()));
+                    player.sendSystemMessage(Component.translatable("message.mod_players.accept_player", target.getName().getString()));
                 } else {
-                    player.sendSystemMessage(Component.literal("no match!"));
+                    player.sendSystemMessage(Component.translatable("message.mod_players.accept_failed"));
                 }
             } else {
-                player.sendSystemMessage(Component.literal("select player"));
+                player.sendSystemMessage(Component.translatable("error.mod_players.player_opponent"));
             }
         }
         return Command.SINGLE_SUCCESS;

@@ -1,0 +1,20 @@
+{
+  "message.mod_players.set_opponent": "set_opponent",
+  "message.mod_players.set_opponent_to_target": "set_opponent_to_target",
+
+  "message.mod_players.reset_opponent": "reset_opponent",
+  "message.mod_players.reset_opponent_to_target": "reset_opponent_to_target",
+
+  "message.mod_players.get_opponent": "get_opponent",
+  "message.mod_players.get_opponent_not_in_game": "get_opponent_not_in_game",
+  "message.mod_players.get_opponent_empty": "get_opponent_empty",
+
+  "message.mod_players.accept_player": "accept_player",
+  "message.mod_players.accept_target": "accept_target",
+  "message.mod_players.accept_failed": "accept_failed",
+
+  "error.mod_players.one_opponent": "one_opponent",
+  "error.mod_players.player_opponent": "player_opponent",
+
+  "error.mod_players.battle": "battle"
+}
