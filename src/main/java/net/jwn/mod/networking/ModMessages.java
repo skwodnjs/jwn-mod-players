@@ -2,6 +2,7 @@ package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.networking.packet.ResetOpponentC2SPacket;
+import net.jwn.mod.networking.packet.StopBattleC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -31,6 +32,12 @@ public class ModMessages {
                 .decoder(ResetOpponentC2SPacket::new)
                 .encoder(ResetOpponentC2SPacket::toBytes)
                 .consumerMainThread(ResetOpponentC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(StopBattleC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(StopBattleC2SPacket::new)
+                .encoder(StopBattleC2SPacket::toBytes)
+                .consumerMainThread(StopBattleC2SPacket::handle)
                 .add();
     }
 

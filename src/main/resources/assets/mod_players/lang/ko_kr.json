@@ -13,8 +13,11 @@
   "message.mod_players.accept_target": "{0}이 당신의 전투 요청을 수락하였습니다.",
   "message.mod_players.accept_failed": "상대가 당신을 지목하지 않았습니다.",
 
+  "message.mod_players.stop_battle": "전투가 종료되었습니다.",
+
   "error.mod_players.one_opponent": "상대는 한 명만 지목할 수 있습니다.",
   "error.mod_players.player_opponent": "플레이어만 지목할 수 있습니다.",
 
-  "error.mod_players.battle": "전투중에는 상대를 지목할 수 없습니다."
+  "error.mod_players.battle": "전투중에는 할 수 없습니다.",
+  "error.mod_players.cant_set_you": "본인을 지목할 수 없습니다."
 }

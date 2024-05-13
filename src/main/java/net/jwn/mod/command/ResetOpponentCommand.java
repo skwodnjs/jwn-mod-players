@@ -18,16 +18,22 @@ public class ResetOpponentCommand {
 
     private int resetOpponent(CommandContext<CommandSourceStack> command) {
         if (command.getSource().getEntity() instanceof Player player) {
-            if (player.getPersistentData().hasUUID(Main.MOD_ID + "_opponent")) {
-                UUID targetUUID = player.getPersistentData().getUUID(Main.MOD_ID + "_opponent");
-                if (player.level().getPlayerByUUID(targetUUID) != null) {
-                    player.level().getPlayerByUUID(targetUUID).sendSystemMessage(
-                            Component.translatable("message.mod_players.reset_opponent_to_target", player.getName().getString())
-                    );
+            // 1. 내가 전투중이면 안됨.
+            if (player.getPersistentData().getBoolean(Main.MOD_ID + "_battle")) {
+                player.sendSystemMessage(Component.translatable("error.mod_players.battle"));
+            } else {
+                // reset
+                if (player.getPersistentData().hasUUID(Main.MOD_ID + "_opponent")) {
+                    UUID targetUUID = player.getPersistentData().getUUID(Main.MOD_ID + "_opponent");
+                    if (player.level().getPlayerByUUID(targetUUID) != null) {
+                        player.level().getPlayerByUUID(targetUUID).sendSystemMessage(
+                                Component.translatable("message.mod_players.reset_opponent_to_target", player.getName().getString())
+                        );
+                    }
+                    player.getPersistentData().remove(Main.MOD_ID + "_opponent");
                 }
+                player.sendSystemMessage(Component.translatable("message.mod_players.reset_opponent"));
             }
-            player.getPersistentData().remove(Main.MOD_ID + "_opponent");
-            player.sendSystemMessage(Component.translatable("message.mod_players.reset_opponent"));
         }
         return Command.SINGLE_SUCCESS;
     }
