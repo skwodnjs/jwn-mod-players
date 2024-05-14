@@ -32,11 +32,11 @@ public class AcceptCommand {
                 // 아니면 너 플레이어 말고 다른거 지목함?
                 player.sendSystemMessage(Component.translatable("error.mod_players.player_opponent"));
             } else if (player.equals(target)) {
-                //본인 지목한건 아니지?
+                // 본인 지목한건 아니지?
                 player.sendSystemMessage(Component.translatable("error.mod_players.cant_set_you"));
             } else {
                 // 오케이 그러면 상대가 널 지목했는지 확인해볼게.
-                if (target.getPersistentData().hasUUID(Main.MOD_ID + "_opponent")) {
+                if (!target.getPersistentData().hasUUID(Main.MOD_ID + "_opponent")) {
                     player.sendSystemMessage(Component.translatable("message.mod_players.accept_failed"));
                 } else if (!target.getPersistentData().getUUID(Main.MOD_ID + "_opponent").equals(player.getUUID())) {
                     player.sendSystemMessage(Component.translatable("message.mod_players.accept_failed"));

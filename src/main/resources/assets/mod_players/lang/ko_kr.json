@@ -5,9 +5,8 @@
   "message.mod_players.reset_opponent": "상대 지목을 취소했습니다.",
   "message.mod_players.reset_opponent_to_target": "{0}이(가) 지목을 취소했습니다.",
 
-  "message.mod_players.get_opponent": "지목한 상대: {0}",
+  "message.mod_players.get_opponent": "{0}이(가) 지목한 상대: {1}",
   "message.mod_players.get_opponent_not_in_game": "지목한 상대가 게임에 접속중이 아닙니다.",
-  "message.mod_players.get_opponent_empty": "지목한 상대가 없습니다.",
 
   "message.mod_players.accept_player": "{0}의 전투 요청을 수락하였습니다.",
   "message.mod_players.accept_target": "{0}이 당신의 전투 요청을 수락하였습니다.",
@@ -19,5 +18,6 @@
   "error.mod_players.player_opponent": "플레이어만 지목할 수 있습니다.",
 
   "error.mod_players.battle": "전투중에는 할 수 없습니다.",
-  "error.mod_players.cant_set_you": "본인을 지목할 수 없습니다."
+  "error.mod_players.cant_set_you": "본인을 지목할 수 없습니다.",
+  "error.mod_players.opponent_empty": "지목한 상대가 없습니다."
 }

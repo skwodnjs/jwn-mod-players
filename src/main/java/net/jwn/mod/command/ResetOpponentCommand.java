@@ -18,21 +18,24 @@ public class ResetOpponentCommand {
 
     private int resetOpponent(CommandContext<CommandSourceStack> command) {
         if (command.getSource().getEntity() instanceof Player player) {
-            // 1. 내가 전투중이면 안됨.
             if (player.getPersistentData().getBoolean(Main.MOD_ID + "_battle")) {
+                // 혹시 너 전투중?
                 player.sendSystemMessage(Component.translatable("error.mod_players.battle"));
             } else {
-                // reset
+                // 그러면 초기화.
                 if (player.getPersistentData().hasUUID(Main.MOD_ID + "_opponent")) {
                     UUID targetUUID = player.getPersistentData().getUUID(Main.MOD_ID + "_opponent");
                     if (player.level().getPlayerByUUID(targetUUID) != null) {
+                        // 상대가 접속중이면 메시지 보냄
                         player.level().getPlayerByUUID(targetUUID).sendSystemMessage(
                                 Component.translatable("message.mod_players.reset_opponent_to_target", player.getName().getString())
                         );
                     }
                     player.getPersistentData().remove(Main.MOD_ID + "_opponent");
+                    player.sendSystemMessage(Component.translatable("message.mod_players.reset_opponent"));
+                } else {
+                    player.sendSystemMessage(Component.translatable("error.mod_players.opponent_empty"));
                 }
-                player.sendSystemMessage(Component.translatable("message.mod_players.reset_opponent"));
             }
         }
         return Command.SINGLE_SUCCESS;
